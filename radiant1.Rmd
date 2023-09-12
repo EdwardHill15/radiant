@@ -1,0 +1,77 @@
+---
+pagetitle: Rmd report
+output:
+  html_document:
+    highlight: zenburn
+    theme: cosmo
+    df_print: paged
+    toc: yes
+    code_folding: hide
+    code_download: true
+---
+
+```{r r_setup, include = FALSE}
+## initial settings
+knitr::opts_chunk$set(
+  comment = NA,
+  echo = TRUE,
+  error = TRUE,
+  cache = FALSE,
+  message = FALSE,
+
+  dpi = 96,
+  warning = FALSE
+)
+
+## width to use when printing tables etc.
+options(
+  width = 250,
+  scipen = 100,
+  max.print = 5000,
+  stringsAsFactors = FALSE
+)
+
+## make all required libraries available by loading radiant package if needed
+if (is.null(shiny::getDefaultReactiveDomain())) library(radiant)
+
+## include code to load the data you require
+## for interactive use attach the r_data environment
+# attach(r_data)
+```
+
+<style>
+.btn, .form-control, pre, code, pre code {
+  border-radius: 4px;
+}
+.table {
+  width: auto;
+}
+ul, ol {
+  padding-left: 18px;
+}
+code, pre, pre code {
+  overflow: auto;
+  white-space: pre;
+  word-wrap: normal;
+}
+code {
+  color: #c7254e;
+  background-color: #f9f2f4;
+}
+pre {
+  background-color: #ffffff;
+}
+</style>
+
+## Your report title
+
+
+```{r}
+## filter and sort the dataset
+diamonds %>%
+  select(price:date) %>%
+  droplevels() %>%
+  dtab(dec = 2, caption = "", nr = 100) %>%
+  render()
+```
+
